@@ -1,4 +1,4 @@
-# tiktok_yt
+# GreenGhana App
 
 A new Flutter project.
 
