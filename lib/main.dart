@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tiktok_yt/constants.dart';
 import 'package:tiktok_yt/controller/auth_controller.dart';
 import 'package:tiktok_yt/view/screens/auth/signup_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main()  async{
  WidgetsFlutterBinding.ensureInitialized();

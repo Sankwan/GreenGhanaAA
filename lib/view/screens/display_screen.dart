@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:tiktok_yt/view/screens/comment_screen.dart';
 import 'package:tiktok_yt/view/screens/profile_screen.dart';
+import 'package:tiktok_yt/view/screens/search_screen.dart';
 import 'package:tiktok_yt/view/widgets/AlbumRotator.dart';
 import 'package:tiktok_yt/view/widgets/ProfileButton.dart';
 import 'package:tiktok_yt/view/widgets/TikTokVideoPlayer.dart';
@@ -33,6 +34,41 @@ final VideoController videoController = Get.put(VideoController());
 
     
     return Scaffold(
+    
+        extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: GestureDetector(
+            onTap: (() {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) =>  ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid,))));
+            }),
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage('assets/images/profilepic.png'),
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: GestureDetector( onTap:(() {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) =>  SearchScreen())));
+            }),
+              child:const Icon(Icons.search,)),
+          ),
+        ],
+        title: const Text(
+          'Green Ghana',
+          style: TextStyle(color: Colors.white, fontSize: 15),
+        ),
+        centerTitle: true,
+      ),
+
       body: Obx(() {
           return PageView.builder(
               scrollDirection: Axis.vertical,
@@ -50,14 +86,14 @@ final VideoController videoController = Get.put(VideoController());
                         videoUrl: data.videoUrl,
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 10, left: 15),
+                        margin:const EdgeInsets.only(bottom: 10, left: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               data.username,
-                              style: TextStyle(
+                              style:const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 20),
                             ),
                             Text(
@@ -65,7 +101,7 @@ final VideoController videoController = Get.put(VideoController());
                             ),
                             Text(
                               data.songName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style:const TextStyle(fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -103,7 +139,7 @@ final VideoController videoController = Get.put(VideoController());
                                     Text(
                                       data.likes.length.toString(),
                                       style:
-                                          TextStyle(fontSize: 15, color: Colors.white),
+                                         const TextStyle(fontSize: 15, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -114,7 +150,7 @@ final VideoController videoController = Get.put(VideoController());
                                 },
                                 child: Column(
                                   children: [
-                                    Icon(
+                                   const Icon(
                                       Icons.reply,
                                       size: 45,
                                       color: Colors.white,
@@ -122,7 +158,7 @@ final VideoController videoController = Get.put(VideoController());
                                     Text(
                                      data.shareCount.toString(),
                                       style:
-                                          TextStyle(fontSize: 15, color: Colors.white),
+                                         const TextStyle(fontSize: 15, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -133,7 +169,7 @@ final VideoController videoController = Get.put(VideoController());
                                 },
                                 child: Column(
                                   children: [
-                                    Icon(
+                                   const Icon(
                                       Icons.comment,
                                       size: 45,
                                       color: Colors.white,
@@ -141,9 +177,9 @@ final VideoController videoController = Get.put(VideoController());
                                     Text(
                                      data.commentsCount.toString(),
                                       style:
-                                          TextStyle(fontSize: 15, color: Colors.white),
+                                         const TextStyle(fontSize: 15, color: Colors.white),
                                     ),
-                                    SizedBox(height: 20,),
+                                   const SizedBox(height: 20,),
                                     Column(
                                       children: [
                                         AlbumRotator(profilePicUrl: data.profilePic)

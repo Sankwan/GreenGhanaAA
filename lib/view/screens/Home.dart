@@ -14,10 +14,11 @@ int pageIdx = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
 
       bottomNavigationBar: BottomNavigationBar(
 type: BottomNavigationBarType.fixed,
-        backgroundColor: backgroundColor,
+backgroundColor: backgroundColor,
         onTap: (index){
   setState(() {
     pageIdx = index;
@@ -26,14 +27,15 @@ type: BottomNavigationBarType.fixed,
         currentIndex: pageIdx,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 25),
+            
+              icon: Icon(Icons.home, size: 25,),
             label: 'Home'
 
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.search, size: 25),
-              label: 'Search'
+              icon: Icon(Icons.nature, size: 25),
+              label: 'Requests'
 
           ),
 
@@ -44,14 +46,14 @@ type: BottomNavigationBarType.fixed,
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.message, size: 25),
-              label: 'Messages'
+              icon: Icon(Icons.map, size: 25),
+              label: 'Map'
 
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 25),
-              label: 'Profile'
+              icon: Icon(Icons.check, size: 25),
+              label: 'Progress'
 
           ),
         ],
