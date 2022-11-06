@@ -15,10 +15,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: backgroundColor,
+        backgroundColor: pageIdx == 0? Colors.black : Colors.white,
         onTap: (index) {
           setState(() {
             pageIdx = index;
@@ -40,6 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.check, size: 25), label: 'Progress'),
         ],
+        unselectedIconTheme: IconThemeData(color: Colors.grey),
+        unselectedLabelStyle: TextStyle(color: Colors.red),
       ),
       body: Center(
         child: pageindex[pageIdx],

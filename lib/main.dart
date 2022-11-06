@@ -23,9 +23,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Green Ghana',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
+      // theme: ThemeData.light().copyWith(
 
-        scaffoldBackgroundColor: backgroundColor
+      //   scaffoldBackgroundColor: backgroundColor
+      // ),
+      theme: ThemeData(
+        primarySwatch: Colors.green
       ),
       home: SignUpScreen(),
     );
