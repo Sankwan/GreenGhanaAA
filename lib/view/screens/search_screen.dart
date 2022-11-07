@@ -16,6 +16,8 @@ final SearchController searchController = Get.put(SearchController());
           appBar: AppBar(
 
             title: TextFormField(
+              cursorColor: Colors.white,
+              style: TextStyle(color: Colors.white),
                 decoration: new InputDecoration(
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -24,7 +26,8 @@ final SearchController searchController = Get.put(SearchController());
                     disabledBorder: InputBorder.none,
                     contentPadding:
                     EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: "Search Username"
+                    hintText: "Search Username",
+                    hintStyle: TextStyle(color: Colors.white),
                 )
             ,controller: searchQuery , onFieldSubmitted: (value){
               searchController.searchUser(value);

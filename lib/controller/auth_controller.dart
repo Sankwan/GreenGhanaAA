@@ -12,6 +12,7 @@ import 'package:tiktok_yt/view/screens/auth/signup_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
+  
 File? proimg;
 
 void pickImage() async{

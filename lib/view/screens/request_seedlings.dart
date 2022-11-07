@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_yt/controller/auth_controller.dart';
 import 'package:tiktok_yt/view/widgets/custom_widget.dart';
 
 import 'checkout_seedlings.dart';
@@ -12,6 +15,7 @@ class RequestSeedlings extends StatefulWidget {
 }
 
 class _RequestSeedlingsState extends State<RequestSeedlings> {
+  User? user;
   bool teak = false;
   bool pear = false;
   bool coconut = false;
@@ -25,10 +29,13 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
   List<bool> seedSeleted = [false, false, false, false];
   List<int> seedCount = [1, 1, 1, 1];
 
-  List addCart = [];
+  List<Map> addCart = [];
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
+    // var currUser = firestore.collection('users').doc(user!.uid).get();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -41,7 +48,7 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: ListView(children: [
           const SizedBox(
-            height: 30,
+            height: 50,
           ),
           const Text('Seedlings we have'),
 
@@ -93,28 +100,7 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
               },
             ),
           ),
-
-          // DropdownSearch<String>.multiSelection(
-          //   items: const ['Teak', 'Pear', 'Coconut', 'largent', 'sieboldii'],
-          //   popupProps: const PopupPropsMultiSelection.menu(
-          //     searchFieldProps: TextFieldProps(
-          //       decoration: InputDecoration(
-          //         border: OutlineInputBorder(borderSide: BorderSide()),
-          //         // labelText: 'seedling selection',
-          //         hintText: 'select seedling(s) here',
-          //         hintStyle: TextStyle(
-          //           fontSize: 12,
-          //           fontWeight: FontWeight.w100,
-          //         ),
-          //       ),
-          //     ),
-          //     showSearchBox: true,
-          //     showSelectedItems: true,
-          //   ),
-          //   onChanged: print,
-          //   selectedItems: const ["Teak"],
-          // ),
-          const SizedBox(height: 70),
+          const SizedBox(height: 50),
           DropdownSearch<String>(
             popupProps: const PopupProps.menu(
               showSelectedItems: true,
@@ -123,10 +109,10 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(borderSide: BorderSide()),
                   // labelText: 'type location here',
-                  hintText: 'type location here',
+                  hintText: 'select or type location here',
                   hintStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w100,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
@@ -141,6 +127,7 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 labelText: "Location to receive seedlings",
+                labelStyle: TextStyle(fontSize: 18),
               ),
             ),
             onChanged: print,
@@ -152,7 +139,7 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
           Padding(
             padding: const EdgeInsets.only(left: 60, right: 60),
             child: TextButton(
-              onPressed: (() {
+              onPressed: (() async {
                 // var idx;
                 addCart.clear();
 
@@ -169,24 +156,42 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
                           'name': seedling[i],
                           'quantity': seedCount[i].toString()
                         };
-                      } else if (addCart[idx]['name'] != seedling[i]) {
-                        addCart.add({
-                          'name': seedling[i],
-                          'quantity': seedCount[i].toString()
-                        });
                       }
-                      logger.d(addCart);
                     }
                   }
+                  if (seedSeleted[i] &&
+                      !addCart.contains({
+                        'name': seedling[i],
+                        'quantity': seedCount[i].toString()
+                      })) {
+                    addCart.add({
+                      'name': seedling[i],
+                      'quantity': seedCount[i].toString()
+                    });
+                  }
+                  if (seedSeleted[i] &&
+                      addCart.contains({
+                        'name': seedling[i],
+                        'quantity': seedCount[i].toString()
+                      })) {
+                    addCart.remove({
+                      'name': seedling[i],
+                      'quantity': seedCount[i].toString()
+                    });
+                  }
                 }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => CheckoutSeedlings(
-                          cartItems: addCart,
-                        )),
-                  ),
-                );
+                if (seedSeleted.contains(true)) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => CheckoutSeedlings(
+                            name: 'Current User',
+                            loc: 'Place',
+                            cartItems: addCart,
+                          )),
+                    ),
+                  );
+                }
               }),
               style: TextButton.styleFrom(
                 backgroundColor: Colors.green,

@@ -43,7 +43,7 @@ title: Text('@${controller.user["name"]}'),
         actions: [
           IconButton(
             onPressed: (){
-Get.snackbar("TikTok Clone Yt App", "Current Version 1.0");
+Get.snackbar("Green Ghana App", "Current Version 1.0");
             },
             icon: Icon(Icons.info_outline_rounded),
           )
