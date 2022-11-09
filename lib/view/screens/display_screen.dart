@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:tiktok_yt/view/screens/comment_screen.dart';
+import 'package:tiktok_yt/view/screens/planting_info.dart';
 import 'package:tiktok_yt/view/screens/profile_screen.dart';
 import 'package:tiktok_yt/view/screens/search_screen.dart';
 import 'package:tiktok_yt/view/widgets/AlbumRotator.dart';
@@ -30,37 +31,39 @@ class DisplayVideo_Screen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        
         actions: [
           Row(
-          children: [
-            GestureDetector(
-              onTap: (() {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => ProfileScreen(
-                              uid: FirebaseAuth.instance.currentUser!.uid,
-                            ))));
-              }),
-              child: const CircleAvatar(
-                radius: 18,
-                backgroundImage: AssetImage('assets/images/profilepic.png'),
-              ),
-            ),
-            GestureDetector(
+            children: [
+              GestureDetector(
                 onTap: (() {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) => SearchScreen())));
+                          builder: ((context) => ProfileScreen(
+                                uid: FirebaseAuth.instance.currentUser!.uid,
+                              ))));
                 }),
-                child: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                )),
-          ],
-        ),
+                child: const CircleAvatar(
+                  radius: 18,
+                  backgroundImage: AssetImage('assets/images/profilepic.png'),
+                ),
+              ),
+              GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => SearchScreen())));
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 20),
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  )),
+            ],
+          ),
         ],
         title: const Text(
           'Green Ghana',
@@ -220,15 +223,26 @@ class DisplayVideo_Screen extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Column(
-                                    children: [
-                                      AlbumRotator(
-                                          profilePicUrl: data.profilePic)
-                                    ],
-                                  ),
+                                  // Column(
+                                  //   children: [
+                                  //     AlbumRotator(
+                                  //         profilePicUrl: data.profilePic)
+                                  //   ],
+                                  // ),
                                 ],
                               ),
-                            )
+                            ),
+                            // InkWell(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>const PlantingInfo()));
+                            //   },
+                            //   child: ProfileButton(
+                            //     profilePhotoUrl: data.profilePic,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

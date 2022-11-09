@@ -187,6 +187,7 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
                       builder: ((context) => CheckoutSeedlings(
                             name: 'Current User',
                             loc: 'Place',
+                            number: 'User number',
                             cartItems: addCart,
                           )),
                     ),
@@ -206,8 +207,33 @@ class _RequestSeedlingsState extends State<RequestSeedlings> {
               ),
             ),
           ),
+
+          //beginning of test dropdowns
+          //to implement this in the edit
+
+DropdownSearch<String>.multiSelection(
+    items: ["Teak", "Coco", "Guava", 'C', 'k','q','r', 's', 'braee','tectona'],
+    popupProps: PopupPropsMultiSelection.menu(
+        showSelectedItems: true,
+        showSearchBox: true,
+        searchFieldProps: TextFieldProps(
+          decoration: InputDecoration(
+                  border: OutlineInputBorder(borderSide: BorderSide()),
+                  // labelText: 'type location here',
+                  hintText: 'select or type specie(s) here',
+                  hintStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+        ),
+    ),
+    onChanged: print,
+    selectedItems: ["Teak"],
+),
         ]),
       ),
     );
   }
 }
+

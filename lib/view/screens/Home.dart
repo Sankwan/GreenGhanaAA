@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.nature, size: 25), label: 'Requests'),
-          BottomNavigationBarItem(icon: customAddIcon(), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.camera, size: 25,) , label: ''),
           BottomNavigationBarItem(
               icon: Icon(Icons.map, size: 25), label: 'Map'),
           BottomNavigationBarItem(
               icon: Icon(Icons.check, size: 25), label: 'Progress'),
         ],
         unselectedIconTheme: IconThemeData(color: Colors.grey),
-        unselectedLabelStyle: TextStyle(color: Colors.red),
+        unselectedLabelStyle: TextStyle(color: Colors.brown),
       ),
       body: Center(
         child: pageindex[pageIdx],
