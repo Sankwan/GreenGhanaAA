@@ -5,7 +5,7 @@ nextNav(BuildContext context, intent) {
   return Navigator.push(
     context,
     MaterialPageRoute(
-      builder: ((context) => intent()),
+      builder: ((context) => intent),
     ),
   );
 }
