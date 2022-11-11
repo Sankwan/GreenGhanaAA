@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:tiktok_yt/model/plant_list.dart';
 import 'package:tiktok_yt/view/screens/Home.dart';
 
 class PlantingInfo extends StatelessWidget {
@@ -11,46 +9,22 @@ class PlantingInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text(
+        title: const Text(
           'How to Plant Seedlings',
           style: TextStyle(fontSize: 15),
         ),
         centerTitle: true,
       ),
-      body: ListView(
+      body: Column(
         children: [
-         const SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          Container(
-            height: 200,
-            width: 100,
-            color: Colors.amber,
-          ),
-         const SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 200,
-            width: 100,
-            color: Colors.red,
-          ),
-         const SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 200,
-            width: 100,
-            color: Colors.green,
-          ),
-         const SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 200,
-            width: 100,
-            color: Colors.blue,
-          ),
+          Expanded(
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, childAspectRatio: 0.75),
+                  itemBuilder: ((context, index) => const ItemCard())))
         ],
       ),
     );

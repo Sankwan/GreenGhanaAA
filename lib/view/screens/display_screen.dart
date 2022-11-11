@@ -55,9 +55,9 @@ class DisplayVideo_Screen extends StatelessWidget {
                         MaterialPageRoute(
                             builder: ((context) => SearchScreen())));
                   }),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 20),
-                    child: const Icon(
+                  child:const Padding(
+                    padding:  EdgeInsets.only(left: 30, right: 20),
+                    child:  Icon(
                       Icons.search,
                       color: Colors.white,
                     ),
