@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_yt/constants.dart';
 import 'package:tiktok_yt/view/widgets/customAddIcon.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       // backgroundColor: Colors.black,
       bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
         backgroundColor: pageIdx == 0? Colors.black : Colors.white,
         onTap: (index) {
@@ -28,17 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.home,
-                size: 25,
+                Icons.dashboard_rounded,
+                size: 20,
               ),
               label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.nature, size: 25), label: 'Requests'),
-          BottomNavigationBarItem(icon: Icon(Icons.camera, size: 25,) , label: ''),
+              icon: Icon(FontAwesomeIcons.seedling, size: 20), label: 'Requests'),
+          BottomNavigationBarItem(icon: Icon(Icons.camera, size: 27,) , label: ''),
           BottomNavigationBarItem(
-              icon: Icon(Icons.map, size: 25), label: 'Map'),
+              icon: Icon(FontAwesomeIcons.mapPin, size: 20), label: 'Map'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.check, size: 25), label: 'Progress'),
+              icon: Icon(FontAwesomeIcons.chartSimple, size: 20), label: 'Progress'),
         ],
         unselectedIconTheme: IconThemeData(color: Colors.grey),
         unselectedLabelStyle: TextStyle(color: Colors.brown),

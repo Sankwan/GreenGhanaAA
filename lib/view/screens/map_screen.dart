@@ -67,13 +67,13 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Google map here',
+          'Aerial mapping of seedlings',
           style: TextStyle(fontSize: 15),
         ),
         centerTitle: true,
       ),
       body: GoogleMap(
-        initialCameraPosition: CameraPosition(target: accra, zoom: 11),
+        initialCameraPosition: CameraPosition(target: accra, zoom: 12),
         myLocationEnabled: true,
       ),
     );

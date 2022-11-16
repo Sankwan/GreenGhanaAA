@@ -43,9 +43,11 @@ class DisplayVideo_Screen extends StatelessWidget {
                                 uid: FirebaseAuth.instance.currentUser!.uid,
                               ))));
                 }),
-                child: const CircleAvatar(
-                  radius: 18,
-                  backgroundImage: AssetImage('assets/images/profilepic.png'),
+                child:  CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 16,
+                  child: Image(image: AssetImage('assets/images/profilepic1.jpg')) ,
+                  
                 ),
               ),
               GestureDetector(
@@ -60,6 +62,7 @@ class DisplayVideo_Screen extends StatelessWidget {
                     child:  Icon(
                       Icons.search,
                       color: Colors.white,
+                      size: 27,
                     ),
                   )),
             ],

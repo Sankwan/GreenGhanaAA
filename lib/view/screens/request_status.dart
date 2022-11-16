@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tiktok_yt/view/screens/Home.dart';
 import 'package:tiktok_yt/view/screens/planting_info.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RequestStatus extends StatelessWidget {
   const RequestStatus({Key? key}) : super(key: key);
@@ -31,67 +32,31 @@ class RequestStatus extends StatelessWidget {
             style: TextStyle(fontSize: 15),
           ),
           SizedBox(
-            height: 300,
+            height: 40,
+          ),
+          Text(
+            'Report to your chosen location to receive seedlings from our Officers', textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15),
+          ),
+          SizedBox(
+            height: 250,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
+              FloatingActionButton.extended(
+                backgroundColor: Colors.grey,
+                onPressed: (){
+                Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
                     (route) => false,
                   );
-                },
-                child: Container(
-                  height: 70,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: const Text(
-                        'Return Home',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  
+              }, icon: Icon(Icons.dashboard_rounded), label: Text('Return Home')),
+              FloatingActionButton.extended(onPressed: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>const PlantingInfo()));
-                },
-                child: Container(
-                  height: 70,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                      ),
-                      child: const Text(
-                        'Planting',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              },icon: Icon(FontAwesomeIcons.tree), label: Text('Planting'))
             ],
           ),
         ],

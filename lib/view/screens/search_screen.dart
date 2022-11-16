@@ -14,20 +14,31 @@ final SearchController searchController = Get.put(SearchController());
     return Obx(() {
         return Scaffold(
           appBar: AppBar(
-
+            toolbarHeight: 70,
+            backgroundColor: Colors.grey.shade50,
+            foregroundColor: Colors.black,
+            elevation: 0,
             title: TextFormField(
-              cursorColor: Colors.white,
-              style: TextStyle(color: Colors.white),
+              cursorColor: Colors.black,
+              style: TextStyle(color: Colors.black),
                 decoration: new InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
+                  filled: true,
+                  fillColor: Colors.grey.shade300,
+                
+                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade700,),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                    // border: InputBorder.none,
+                    // focusedBorder: InputBorder.none,
+                    // enabledBorder: InputBorder.none,
+                    // errorBorder: InputBorder.none,
+                    // disabledBorder: InputBorder.none,
                     contentPadding:
                     EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                     hintText: "Search Username",
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.grey),
                 )
             ,controller: searchQuery , onFieldSubmitted: (value){
               searchController.searchUser(value);
@@ -36,7 +47,7 @@ final SearchController searchController = Get.put(SearchController());
 
           ),
           body:  searchController.searchedUsers.isEmpty ?   Center(
-            child: Text("Search Users!"),
+            child: Text("Search Users!", style: TextStyle(color: Colors.green),),
           ) :
           ListView.builder(
               itemCount: searchController.searchedUsers.length,
