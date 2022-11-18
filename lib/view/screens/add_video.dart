@@ -22,7 +22,7 @@ class addVideoScreen extends StatelessWidget {
                   videoFile: File(video.path), videoPath: video.path)));
     } else {
       Get.snackbar(
-          "Error In Selecting Video", "Please Choose A Different Video File");
+          "Error In Selecting Video", "Please Choose A Video File");
     }
   }
 
@@ -50,7 +50,7 @@ class addVideoScreen extends StatelessWidget {
   }
 
   floatingButtonVid(BuildContext context) {
-    return FloatingActionButton.large(
+    return FloatingActionButton(
       onPressed: () {
         () => videoPick(ImageSource.camera, context);
       },
@@ -60,7 +60,7 @@ class addVideoScreen extends StatelessWidget {
   }
 
   floatingButtonCam(BuildContext context) {
-    return FloatingActionButton.large(
+    return FloatingActionButton(
       onPressed: () {
         () => videoPick(ImageSource.gallery, context);
       },

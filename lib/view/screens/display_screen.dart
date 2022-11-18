@@ -26,6 +26,8 @@ class DisplayVideo_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -35,6 +37,18 @@ class DisplayVideo_Screen extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => SearchScreen())));
+                  }),
+                  child: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 27,
+                  )),
+                        GestureDetector(
                 onTap: (() {
                   Navigator.push(
                       context,
@@ -43,28 +57,16 @@ class DisplayVideo_Screen extends StatelessWidget {
                                 uid: FirebaseAuth.instance.currentUser!.uid,
                               ))));
                 }),
-                child:  CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 16,
-                  child: Image(image: AssetImage('assets/images/profilepic1.jpg')) ,
-                  
+                child: const Padding(
+                  padding:  EdgeInsets.only(left: 30, right: 20),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 16,
+                    child:
+                        Image(image: AssetImage('assets/images/profilepic1.jpg')),
+                  ),
                 ),
               ),
-              GestureDetector(
-                  onTap: (() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => SearchScreen())));
-                  }),
-                  child:const Padding(
-                    padding:  EdgeInsets.only(left: 30, right: 20),
-                    child:  Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 27,
-                    ),
-                  )),
             ],
           ),
         ],
@@ -111,24 +113,25 @@ class DisplayVideo_Screen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
+                         const SizedBox(
                             height: 5,
                           ),
                           Text(
                             data.caption,
                             style: const TextStyle(color: Colors.white),
                           ),
-                          SizedBox(
+                         const SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.location_pin,
                                 color: Colors.white,
                                 size: 15,
                               ),
                               Text(
+                                //chnage to locationName
                                 data.songName,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -205,11 +208,33 @@ class DisplayVideo_Screen extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CommentScreen(id: data.id)));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             CommentScreen(id: data.id)));
+                                showModalBottomSheet(
+                                  shape:const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20))),
+                                  enableDrag: true,
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: 10,
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
+                                      child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.5,
+                                          child: CommentScreen(id: data.id)),
+                                    );
+                                  },
+                                );
                               },
                               child: Column(
                                 children: [

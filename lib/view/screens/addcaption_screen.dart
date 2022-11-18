@@ -23,7 +23,7 @@ class _addCaption_ScreenState extends State<addCaption_Screen> {
 late VideoPlayerController videoPlayerController;
 
 VideoUploadController videoUploadController = Get.put(VideoUploadController());
-TextEditingController songNameController = new TextEditingController();
+TextEditingController locationNameController = new TextEditingController();
 TextEditingController captionController = new TextEditingController();
 
 
@@ -73,18 +73,17 @@ setState(() {
     child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
     children: [
-
-        TextInputField(controller: songNameController,
-            myIcon: Icons.music_note,
-            myLabelText: "Song Name"),
-        SizedBox(height: 20,),
         TextInputField(controller: captionController,
             myIcon: Icons.closed_caption,
             myLabelText: "Caption"),
-      SizedBox(height: 10,),
+      SizedBox(height: 20,),
+      TextInputField(controller: locationNameController,
+            myIcon: Icons.location_pin,
+            myLabelText: "Location of Planting"),
+        SizedBox(height: 10,),
       ElevatedButton(onPressed: (){
         uploadVid();
-        videoUploadController.uploadVideo(songNameController.text, captionController.text, widget.videoPath);
+        videoUploadController.uploadVideo(locationNameController.text, captionController.text, widget.videoPath);
 
       }, child: UploadContent , style: ElevatedButton.styleFrom(primary: buttonColor),)
     ],
