@@ -23,10 +23,10 @@ class CommentScreen extends StatelessWidget {
       child: Column(
         children: [
           Obx(() {
-            return Container(
-              height: MediaQuery.of(context).size.height * 0.38,
-              child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
+            return SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.38,
                 child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: commentController.comments.length,
@@ -86,7 +86,7 @@ class CommentScreen extends StatelessWidget {
                                 color: comment.likes.contains(
                                         FirebaseAuth.instance.currentUser!.uid)
                                     ? Colors.red
-                                    : Colors.white)),
+                                    : Colors.grey.shade300)),
                       );
                     }),
               ),

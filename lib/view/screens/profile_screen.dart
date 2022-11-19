@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,9 @@ import 'package:tiktok_yt/controller/profile_controller.dart';
 import 'package:tiktok_yt/view/screens/Home.dart';
 import 'package:tiktok_yt/view/screens/auth/signout_screen.dart';
 import 'package:tiktok_yt/view/screens/display_screen.dart';
+import 'package:tiktok_yt/view/screens/uservideos_screen.dart';
 import 'package:tiktok_yt/view/widgets/customAddIcon.dart';
+import 'package:tiktok_yt/view/widgets/custom_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   String uid;
@@ -21,9 +24,17 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final ProfileController profileController = Get.put(ProfileController());
   final AuthController authController = Get.put(AuthController());
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getVideos() async {
+    var vidz = await FirebaseFirestore.instance
+        .collection("videos")
+        .where("uid", isEqualTo: authController.user.uid)
+        .get();
+    return vidz.docs;
+  }
 
   @override
   void initState() {
+    getVideos();
     // TODO: implement initState
     super.initState();
 
@@ -40,13 +51,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundColor: Colors.grey.shade50,
                 foregroundColor: Colors.black,
                 elevation: 0,
-                title: Text('@${controller.user["name"]}', style: TextStyle(fontSize: 17),),
+                title: Text(
+                  '@${controller.user["name"]}',
+                  style: TextStyle(fontSize: 17),
+                ),
                 centerTitle: true,
                 actions: [
-                  IconButton(onPressed: (){
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignoutScreen()));
-                  }, icon: Icon(Icons.more_vert)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignoutScreen()));
+                      },
+                      icon: Icon(Icons.more_vert)),
                   // IconButton(
                   //   onPressed: () {
                   //     Get.snackbar("Green Ghana App", "Current Version 1.0",
@@ -89,6 +107,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               height: 20,
                             ),
+
+                            //  Followers, Likes and Following
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -160,6 +180,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               height: 35,
                             ),
+
+                            //  Signout Button
                             InkWell(
                               onTap: () {
                                 if (widget.uid ==
@@ -200,25 +222,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               height: 50,
                             ),
-                            GridView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        childAspectRatio: 1,
-                                        crossAxisSpacing: 5),
-                                itemCount: controller.user['thumbnails'].length,
-                                itemBuilder: (context, index) {
-                                  String thumbnail =
-                                      controller.user['thumbnails'][index];
-                                  return CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl: thumbnail,
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  );
-                                })
+
+                            //  Videos
+                            FutureBuilder<List<QueryDocumentSnapshot>>(
+                              future: getVideos(),
+                              builder: (context,
+                                  AsyncSnapshot<List<QueryDocumentSnapshot>>
+                                      snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                }
+                                if (snapshot.hasError) {
+                                  logger.d(snapshot.error);
+                                }
+                                logger.d(snapshot.data!.toList());
+                                return GridView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            childAspectRatio: 1,
+                                            mainAxisSpacing: 5,
+                                            crossAxisSpacing: 5),
+                                    itemCount:
+                                        controller.user['thumbnails'].length,
+                                    itemBuilder: (context, index) {
+                                      String thumbnail =
+                                          snapshot.data![index]['thumbnail'];
+                                      String vidUrl =
+                                          snapshot.data![index]['videoUrl'];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          nextNav(
+                                            context,
+                                            UservideosScreen(vidUrl: vidUrl, idx: index,),
+                                          );
+                                        },
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: thumbnail,
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        ),
+                                      );
+                                    });
+                              },
+                            )
                           ],
                         ),
                       ),
