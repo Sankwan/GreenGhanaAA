@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class TikTokVideoPlayer extends StatefulWidget {
   TikTokVideoPlayer({Key? key, required this.videoUrl}) : super(key: key);
@@ -11,15 +12,16 @@ class TikTokVideoPlayer extends StatefulWidget {
 
 class _TikTokVideoPlayerState extends State<TikTokVideoPlayer> {
   late VideoPlayerController videoPlayerController;
-  bool isPaused = false;
+  bool isPaused = true;
+  var nextVideo = false;
 
   @override
   void initState() {
     super.initState();
     videoPlayerController = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((value) {
-        videoPlayerController.play();
-        videoPlayerController.setLooping(true);
+        videoPlayerController.pause();
+        videoPlayerController.setLooping(false);
         setState(() {});
       });
   }
@@ -34,41 +36,49 @@ class _TikTokVideoPlayerState extends State<TikTokVideoPlayer> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GestureDetector(
-          onTap: () {
-            if (videoPlayerController.value.isPlaying) {
-              videoPlayerController.pause().then((value) => setState(() {
-                    isPaused = true;
-                  }));
-            } else {
-              videoPlayerController.play().then((value) => setState(() {
-                    isPaused = false;
-                  }));
-            }
-          },
-          child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
-              child: !videoPlayerController.value.isInitialized
-                  ? Center(
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
+        VisibilityDetector(
+          key: Key(widget.videoUrl),
+          onVisibilityChanged: (visibility) {
+              if (visibility.visibleFraction == 0 && this.mounted) {
+                videoPlayerController.pause();
+              }
+            },
+          child: GestureDetector(
+            onTap: () {
+              if (videoPlayerController.value.isPlaying) {
+                videoPlayerController.pause().then((value) => setState(() {
+                      isPaused = true;
+                    }));
+              } else {
+                videoPlayerController.play().then((value) => setState(() {
+                      isPaused = false;
+                    }));
+              }
+            },
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                ),
+                child: !videoPlayerController.value.isInitialized
+                    ? Center(
+                        child: SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    )
-                  : VideoPlayer(videoPlayerController)),
+                      )
+                    : VideoPlayer(videoPlayerController)),
+          ),
         ),
         Visibility(
           visible: isPaused,
           child: Positioned(
-            top: (MediaQuery.of(context).size.height * 0.5) - 250,
-            left: (MediaQuery.of(context).size.width * 0.5) - 250,
+            top: 10,
+            left: (MediaQuery.of(context).size.width * 0.5) - 260,
             child: GestureDetector(
               onTap: () {
                 if (videoPlayerController.value.isPlaying) {

@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_yt/controller/firebase_services.dart';
+import 'package:tiktok_yt/controller/vid_controller.dart';
 import 'package:tiktok_yt/view/screens/comment_screen.dart';
 import 'package:tiktok_yt/view/screens/profile_screen.dart';
 import 'package:tiktok_yt/view/widgets/ProfileButton.dart';
 import 'package:tiktok_yt/view/widgets/TikTokVideoPlayer.dart';
-import 'package:get/get.dart';
 import '../../controller/video_controller.dart';
 import 'package:flutter_share/flutter_share.dart';
 
@@ -20,7 +21,7 @@ class UservideosScreen extends StatefulWidget {
 }
 
 class _UservideosScreenState extends State<UservideosScreen> {
-  final VideoController videoController = Get.put(VideoController());
+  final FirebaseServices videoController = FirebaseServices();
 
   Future<void> share(String vidId) async {
     await FlutterShare.share(
@@ -37,9 +38,9 @@ class _UservideosScreenState extends State<UservideosScreen> {
       body: PageView.builder(
         scrollDirection: Axis.vertical,
         controller: PageController(initialPage: 0, viewportFraction: 1),
-        itemCount: videoController.videoList.length,
+        itemCount: videoController.getVideos(),
         itemBuilder: (context, index) {
-          final data = videoController.videoList[widget.idx];
+          final data = videoController.getVideos()[widget.idx];
           return InkWell(
             onDoubleTap: () {
               videoController.likedVideo(data.id);

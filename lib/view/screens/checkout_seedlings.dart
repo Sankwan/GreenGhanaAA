@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:tiktok_yt/view/screens/auth/signup_screen.dart';
 import 'package:tiktok_yt/view/screens/request_status.dart';
 import 'package:tiktok_yt/view/widgets/custom_widget.dart';

@@ -60,7 +60,7 @@ class SignoutScreen extends StatelessWidget {
             Center(
               child: InkWell(
                   onTap: () {
-                    AuthController.instance.pickImage();
+                    // AuthController.instance.pickImage();
                   },
                   child: Stack(
                     children: [

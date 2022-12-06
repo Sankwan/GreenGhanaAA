@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_yt/constants.dart';
 import 'package:tiktok_yt/controller/upload_video_controller.dart';
+import 'package:tiktok_yt/controller/vid_controller.dart';
 import 'package:tiktok_yt/view/widgets/text_input.dart';
 import 'dart:io';
-import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 class addCaption_Screen extends StatefulWidget {
   File videoFile;
@@ -22,7 +22,7 @@ class addCaption_Screen extends StatefulWidget {
 class _addCaption_ScreenState extends State<addCaption_Screen> {
 late VideoPlayerController videoPlayerController;
 
-VideoUploadController videoUploadController = Get.put(VideoUploadController());
+VidController videoUploadController = VidController();
 TextEditingController locationNameController = new TextEditingController();
 TextEditingController captionController = new TextEditingController();
 
@@ -83,7 +83,7 @@ setState(() {
         SizedBox(height: 10,),
       ElevatedButton(onPressed: (){
         uploadVid();
-        videoUploadController.uploadVideo(locationNameController.text, captionController.text, widget.videoPath);
+        videoUploadController.uploadVideo(context, locationNameController.text, captionController.text, widget.videoPath);
 
       }, child: UploadContent , style: ElevatedButton.styleFrom(primary: buttonColor),)
     ],

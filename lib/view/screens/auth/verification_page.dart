@@ -21,7 +21,7 @@ class _VerificationPageState extends State<VerificationPage> {
         children: [
           InkWell(
             onTap: () {
-              AuthController.instance.pickImage();
+              // AuthController.instance.pickImage();
             },
             child: Stack(
               children: [
